@@ -50,6 +50,11 @@ public class ClienteController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation("Deletar um cliente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Cliente deletado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro de validacao")
+    })
     public void delete (@PathVariable Integer id){
         clientes.findById((id))
                 .map(cliente -> {
