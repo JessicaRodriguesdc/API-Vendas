@@ -1,6 +1,6 @@
-package io.github.jessica.validation.constraintvalidation;
+package br.com.sistemavendas.validation.constraintvalidation;
 
-import io.github.jessica.validation.NotEmptyList;
+import br.com.sistemavendas.validation.NotEmptyList;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

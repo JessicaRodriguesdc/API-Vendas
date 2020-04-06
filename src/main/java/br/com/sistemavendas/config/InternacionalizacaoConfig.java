@@ -1,4 +1,4 @@
-package io.github.jessica.config;
+package br.com.sistemavendas.config;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;

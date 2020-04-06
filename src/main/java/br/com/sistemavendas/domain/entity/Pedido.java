@@ -1,6 +1,6 @@
-package io.github.jessica.domain.entity;
+package br.com.sistemavendas.domain.entity;
 
-import io.github.jessica.domain.enums.StatusPedido;
+import br.com.sistemavendas.domain.enums.StatusPedido;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

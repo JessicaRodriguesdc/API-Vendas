@@ -1,6 +1,6 @@
-package io.github.jessica.domain.repository;
+package br.com.sistemavendas.domain.repository;
 
-import io.github.jessica.domain.entity.Usuario;
+import br.com.sistemavendas.domain.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

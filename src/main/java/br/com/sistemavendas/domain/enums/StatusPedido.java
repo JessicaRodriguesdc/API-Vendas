@@ -1,4 +1,4 @@
-package io.github.jessica.domain.enums;
+package br.com.sistemavendas.domain.enums;
 
 public enum StatusPedido {
     REALIZADO,

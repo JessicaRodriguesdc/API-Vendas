@@ -1,4 +1,4 @@
-package io.github.jessica.exception;
+package br.com.sistemavendas.exception;
 
 public class RegraNegocioException extends RuntimeException {
 

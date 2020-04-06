@@ -1,4 +1,4 @@
-package io.github.jessica.domain.entity;
+package br.com.sistemavendas.domain.entity;
 
 import lombok.*;
 

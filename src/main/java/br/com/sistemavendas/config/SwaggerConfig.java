@@ -1,4 +1,4 @@
-package io.github.jessica.config;
+package br.com.sistemavendas.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +25,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors
-                        .basePackage("io.github.jessica.rest.controller"))
+                        .basePackage("br.com.sistemavendas.rest.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .securityContexts(Arrays.asList(securityContext()))

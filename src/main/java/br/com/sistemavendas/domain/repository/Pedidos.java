@@ -1,7 +1,7 @@
-package io.github.jessica.domain.repository;
+package br.com.sistemavendas.domain.repository;
 
-import io.github.jessica.domain.entity.Cliente;
-import io.github.jessica.domain.entity.Pedido;
+import br.com.sistemavendas.domain.entity.Cliente;
+import br.com.sistemavendas.domain.entity.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

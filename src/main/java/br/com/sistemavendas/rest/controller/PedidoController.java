@@ -1,13 +1,16 @@
-package io.github.jessica.rest.controller;
+package br.com.sistemavendas.rest.controller;
 
-import io.github.jessica.domain.entity.ItemPedido;
-import io.github.jessica.domain.entity.Pedido;
-import io.github.jessica.domain.enums.StatusPedido;
-import io.github.jessica.rest.dto.AtualizacaoStatusPedidoDTO;
-import io.github.jessica.rest.dto.InformacaoItemPedidoDTO;
-import io.github.jessica.rest.dto.InformacoesPedidoDTO;
-import io.github.jessica.rest.dto.PedidoDTO;
-import io.github.jessica.service.PedidoService;
+import br.com.sistemavendas.domain.entity.ItemPedido;
+import br.com.sistemavendas.domain.entity.Pedido;
+import br.com.sistemavendas.rest.dto.AtualizacaoStatusPedidoDTO;
+import br.com.sistemavendas.rest.dto.InformacaoItemPedidoDTO;
+import br.com.sistemavendas.rest.dto.InformacoesPedidoDTO;
+import br.com.sistemavendas.rest.dto.PedidoDTO;
+import br.com.sistemavendas.domain.enums.StatusPedido;
+import br.com.sistemavendas.service.PedidoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,13 +35,23 @@ public class PedidoController {
 
     @PostMapping
     @ResponseStatus(CREATED)
+    @ApiOperation("Salvar um novo pedido")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Pedido salvo com sucesso"),
+            @ApiResponse(code = 404, message = "Erro de validacao")
+    })
     public Integer save(@RequestBody @Valid PedidoDTO dto){
         Pedido pedido =  service.salvar(dto);
         return pedido.getId();
     }
 
     @GetMapping("{id}")
-    public InformacoesPedidoDTO getById( @PathVariable Integer id ){
+    @ApiOperation("Obter detalhes de um pedido")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Produto encontrado"),
+            @ApiResponse(code = 404, message = "Produto nao encontrado para o ID informado")
+    })
+    public InformacoesPedidoDTO getById(@PathVariable Integer id ){
         return service
                 .obterPedidoCompleto(id)
                 .map( p -> converter(p) )
@@ -48,6 +61,11 @@ public class PedidoController {
 
     @PatchMapping("{id}")
     @ResponseStatus(NO_CONTENT)
+    @ApiOperation("Atualizando status")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Status atualizado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro de validacao")
+    })
     private void updateStatus(@PathVariable Integer id,
                                   @RequestBody @Valid AtualizacaoStatusPedidoDTO dto){
         String novoStatus = dto.getNovoStatus();

@@ -1,4 +1,4 @@
-package io.github.jessica.rest.dto;
+package br.com.sistemavendas.rest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

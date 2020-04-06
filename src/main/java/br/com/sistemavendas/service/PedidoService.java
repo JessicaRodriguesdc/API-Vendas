@@ -1,8 +1,8 @@
-package io.github.jessica.service;
+package br.com.sistemavendas.service;
 
-import io.github.jessica.domain.entity.Pedido;
-import io.github.jessica.domain.enums.StatusPedido;
-import io.github.jessica.rest.dto.PedidoDTO;
+import br.com.sistemavendas.domain.entity.Pedido;
+import br.com.sistemavendas.domain.enums.StatusPedido;
+import br.com.sistemavendas.rest.dto.PedidoDTO;
 
 import java.util.Optional;
 

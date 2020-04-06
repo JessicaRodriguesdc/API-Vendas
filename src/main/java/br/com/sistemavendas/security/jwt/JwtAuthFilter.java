@@ -1,6 +1,6 @@
-package io.github.jessica.security.jwt;
+package br.com.sistemavendas.security.jwt;
 
-import io.github.jessica.service.impl.UsuarioServiceImpl;
+import br.com.sistemavendas.service.impl.UsuarioServiceImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

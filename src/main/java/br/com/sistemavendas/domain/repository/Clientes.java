@@ -1,6 +1,6 @@
-package io.github.jessica.domain.repository;
+package br.com.sistemavendas.domain.repository;
 
-import io.github.jessica.domain.entity.Cliente;
+import br.com.sistemavendas.domain.entity.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 
-public interface Clientes extends JpaRepository<Cliente , Integer> {
+public interface Clientes extends JpaRepository<Cliente, Integer> {
 
     @Query(value = " select * from cliente c where c.nome like '%:nome%' ",nativeQuery = true)
     List<Cliente> encontrarPorNome(@Param("nome") String nome);

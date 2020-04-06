@@ -1,8 +1,8 @@
-package io.github.jessica.rest.controller;
+package br.com.sistemavendas.rest.controller;
 
-import io.github.jessica.exception.PedidoNaoEncontradoException;
-import io.github.jessica.exception.RegraNegocioException;
-import io.github.jessica.rest.ApiErrors;
+import br.com.sistemavendas.exception.PedidoNaoEncontradoException;
+import br.com.sistemavendas.exception.RegraNegocioException;
+import br.com.sistemavendas.rest.ApiErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

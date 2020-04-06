@@ -1,7 +1,7 @@
-package io.github.jessica.security.jwt;
+package br.com.sistemavendas.security.jwt;
 
-import io.github.jessica.VendasApplication;
-import io.github.jessica.domain.entity.Usuario;
+import br.com.sistemavendas.VendasApplication;
+import br.com.sistemavendas.domain.entity.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

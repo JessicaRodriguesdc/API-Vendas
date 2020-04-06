@@ -1,4 +1,4 @@
-package io.github.jessica.rest;
+package br.com.sistemavendas.rest;
 
 import lombok.Data;
 import lombok.Getter;

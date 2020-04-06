@@ -1,11 +1,14 @@
-package io.github.jessica.rest.controller;
+package br.com.sistemavendas.rest.controller;
 
-import io.github.jessica.domain.entity.Usuario;
-import io.github.jessica.exception.SenhaInvalidaException;
-import io.github.jessica.rest.dto.CredenciaisDTO;
-import io.github.jessica.rest.dto.TokenDTO;
-import io.github.jessica.security.jwt.JwtService;
-import io.github.jessica.service.impl.UsuarioServiceImpl;
+import br.com.sistemavendas.domain.entity.Usuario;
+import br.com.sistemavendas.exception.SenhaInvalidaException;
+import br.com.sistemavendas.rest.dto.CredenciaisDTO;
+import br.com.sistemavendas.rest.dto.TokenDTO;
+import br.com.sistemavendas.security.jwt.JwtService;
+import br.com.sistemavendas.service.impl.UsuarioServiceImpl;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +30,11 @@ public class UsuarioController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation("Salva um novo usuario")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Usuario salvo com sucesso"),
+            @ApiResponse(code = 404, message = "Erro de validacao")
+    })
     public Usuario salvar(@RequestBody @Valid Usuario usuario){
         String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
         usuario.setSenha(senhaCriptografada);
@@ -34,6 +42,11 @@ public class UsuarioController {
     }
 
     @PostMapping("/auth")
+    @ApiOperation("Logar")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Usuario logado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro de validacao")
+    })
     public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
         try{
             Usuario usuario = Usuario.builder()

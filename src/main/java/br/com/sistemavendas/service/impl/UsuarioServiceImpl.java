@@ -1,8 +1,8 @@
-package io.github.jessica.service.impl;
+package br.com.sistemavendas.service.impl;
 
-import io.github.jessica.domain.entity.Usuario;
-import io.github.jessica.domain.repository.UsuarioRepository;
-import io.github.jessica.exception.SenhaInvalidaException;
+import br.com.sistemavendas.domain.entity.Usuario;
+import br.com.sistemavendas.domain.repository.UsuarioRepository;
+import br.com.sistemavendas.exception.SenhaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

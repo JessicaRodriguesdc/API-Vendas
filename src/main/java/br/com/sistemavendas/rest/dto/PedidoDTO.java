@@ -1,6 +1,6 @@
-package io.github.jessica.rest.dto;
+package br.com.sistemavendas.rest.dto;
 
-import io.github.jessica.validation.NotEmptyList;
+import br.com.sistemavendas.validation.NotEmptyList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
