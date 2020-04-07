@@ -1,7 +1,6 @@
 package br.com.sistemavendas.service.impl;
 
-import br.com.sistemavendas.domain.entity.Usuario;
-import br.com.sistemavendas.domain.repository.UsuarioRepository;
+import br.com.sistemavendas.domain.repository.Usuarios;
 import br.com.sistemavendas.exception.SenhaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -18,14 +17,14 @@ public class UsuarioServiceImpl implements UserDetailsService {
     private PasswordEncoder encoder;
 
     @Autowired
-    private UsuarioRepository repository;
+    private Usuarios repository;
 
     @Transactional
-    public Usuario salvar (Usuario usuario){
+    public br.com.sistemavendas.domain.entity.Usuario salvar (br.com.sistemavendas.domain.entity.Usuario usuario){
         return repository.save(usuario);
     }
 
-    public UserDetails autenticar(Usuario usuario){
+    public UserDetails autenticar(br.com.sistemavendas.domain.entity.Usuario usuario){
         UserDetails user = loadUserByUsername(usuario.getLogin());
         boolean senhasBatem =  encoder.matches(usuario.getSenha(),user.getPassword());
         if(senhasBatem){
@@ -37,7 +36,7 @@ public class UsuarioServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Usuario usuario = repository.findByLogin(username)
+        br.com.sistemavendas.domain.entity.Usuario usuario = repository.findByLogin(username)
                 .orElseThrow(()-> new UsernameNotFoundException("Usuario nao encontrado na base de dados"));
 
         String[] roles = usuario.isAdmin() ?
