@@ -139,4 +139,3 @@ public class UsuarioController {
     }
 }
 
-  eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqZXNzaWNhIiwiZXhwIjoxNTg2MjI0NDEzfQ.s9MTdCMZfkU7l8gTFNTlZRisqrgOlw_QKwT5B0r_71XmZ4f33oKYs0ssjFIEvINNALjuJsem8EBxkMEV1PkFKQ
