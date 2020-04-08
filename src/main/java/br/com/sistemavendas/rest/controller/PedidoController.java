@@ -43,6 +43,7 @@ public class PedidoController {
     public Integer save(@RequestBody @Valid PedidoDTO dto){
         Pedido pedido =  service.salvar(dto);
         return pedido.getId();
+
     }
 
     @GetMapping("{id}")
