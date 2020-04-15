@@ -72,7 +72,6 @@ public class UsuarioController {
     }
 
 
-
     @GetMapping("{id}")
     @ApiOperation("Obter detalhes de um usuario")
     @ApiResponses({
