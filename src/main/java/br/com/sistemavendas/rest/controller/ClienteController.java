@@ -2,10 +2,14 @@ package br.com.sistemavendas.rest.controller;
 
 import br.com.sistemavendas.domain.entity.Cliente;
 import br.com.sistemavendas.domain.repository.Clientes;
+import br.com.sistemavendas.rest.dto.ClienteDTO;
+import br.com.sistemavendas.service.ClienteService;
 import io.swagger.annotations.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,9 +22,13 @@ import java.util.List;
 public class ClienteController {
 
     private Clientes clientes;
+    private ModelMapper modelMapper;
+    private ClienteService service;
 
-    public ClienteController(Clientes clientes) {
+    public ClienteController(Clientes clientes,ModelMapper modelMapper,ClienteService service) {
         this.clientes = clientes;
+        this.modelMapper = modelMapper;
+        this.service = service;
     }
 
     @GetMapping("{id}")
@@ -30,8 +38,8 @@ public class ClienteController {
             @ApiResponse(code = 404, message = "Cliente nao encontrado para o ID informado")
     })
     public Cliente getClienteById(@PathVariable @ApiParam("id do cliente") Integer id){
-        return clientes
-                .findById(id)
+        return service
+                .obterCliente(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Cliente nao encontrado"));
     }
@@ -43,8 +51,13 @@ public class ClienteController {
             @ApiResponse(code = 201, message = "Cliente salvo com sucesso"),
             @ApiResponse(code = 404, message = "Erro de validacao")
     })
-    public Cliente save(@RequestBody @Valid Cliente cliente){
-        return clientes.save(cliente);
+    public ResponseEntity save(@RequestBody @Valid ClienteDTO clienteDTO){
+
+        Cliente cliente = modelMapper.map(clienteDTO,Cliente.class);
+
+        service.salvar(cliente);
+
+        return ResponseEntity.ok(clienteDTO);
     }
 
 
@@ -56,9 +69,9 @@ public class ClienteController {
             @ApiResponse(code = 404, message = "Erro de validacao")
     })
     public void delete (@PathVariable Integer id){
-        clientes.findById((id))
+        service.obterCliente((id))
                 .map(cliente -> {
-                    clientes.delete(cliente);
+                    service.deletar(cliente);
                     return cliente;
                 })
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -72,12 +85,13 @@ public class ClienteController {
             @ApiResponse(code = 204, message = "Cliente atualizado com sucesso"),
             @ApiResponse(code = 404, message = "Erro de validacao")
     })
-    public void update(@PathVariable Integer id, @RequestBody @Valid Cliente cliente){
-         clientes
-                .findById(id)
+    public void update(@PathVariable Integer id, @RequestBody @Valid ClienteDTO clienteDTO){
+         service
+                .obterCliente(id)
                 .map( clienteExistente -> {
+                    Cliente cliente = converterEmEnity(clienteDTO);
                     cliente.setId(clienteExistente.getId());
-                    clientes.save(cliente);
+                    service.salvar(cliente);
                     return  clienteExistente;
                 } ).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
                  "Cliente nao encontrado"));
@@ -96,6 +110,19 @@ public class ClienteController {
                 .withStringMatcher(
                         ExampleMatcher.StringMatcher.CONTAINING );
         Example example = Example.of(filtro,matcher);
-        return clientes.findAll(example);
+        return service.listar(example);
+    }
+
+
+    private ClienteDTO converterEmDTO(Cliente cliente){
+        ClienteDTO dto = modelMapper.map(cliente,ClienteDTO.class);
+
+        return dto;
+    }
+
+    private Cliente converterEmEnity(ClienteDTO clienteDTO){
+        Cliente cliente = modelMapper.map(clienteDTO,Cliente.class);
+
+        return cliente;
     }
 }

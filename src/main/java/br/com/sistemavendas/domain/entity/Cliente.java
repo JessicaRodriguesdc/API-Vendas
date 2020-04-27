@@ -28,7 +28,6 @@ public class Cliente {
 
     @Column(name = "cpf",length = 11)
     @NotEmpty(message = "{campo.cpf.obrigatorio}")
-
     @CPF(message = "{campo.cpf.invalido}")
     private String cpf;
 
