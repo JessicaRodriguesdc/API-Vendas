@@ -121,6 +121,44 @@ public class ClienteControllerTests {
                 .andExpect(jsonPath("cpf").value(clienteFake.getCpf()));
     }
 
+    @Test
+    @DisplayName("Deve atualizar um cliente existente.")
+    @WithMockUser
+    public void atualizarClienteTest() throws Exception{
+        //cenario
+        Integer id = 1;
+        ClienteDTO dto = prepararClienteDTO();
+        Cliente clienteFake = Cliente.builder()
+                .id(id)
+                .nome("jessica rodrigues")
+                .cpf(dto.getCpf())
+                .build();
+
+        BDDMockito.given(service.obterCliente(id))
+                .willReturn(Optional.of(clienteFake));
+        BDDMockito.given(service.atualizar(Mockito.anyInt(),Mockito.any(Cliente.class)))
+                .willReturn(clienteFake);
+
+        String json = new ObjectMapper().writeValueAsString(dto);
+
+        //execucao
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .put(api_cliente+"/"+id)
+                .with(csrf())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        //verificacao
+        mvc.perform(request)
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("id").isNotEmpty())
+                .andExpect(jsonPath("id").value(clienteFake.getId()))
+                .andExpect(jsonPath("nome").value(clienteFake.getNome()))
+                .andExpect(jsonPath("cpf").value(clienteFake.getCpf()));
+    }
+
+
     public ClienteDTO prepararClienteDTO(){
         return new ClienteDTO("jessica","93229667000");
     }

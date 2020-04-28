@@ -83,16 +83,18 @@ public class ClienteController {
             @ApiResponse(code = 204, message = "Cliente atualizado com sucesso"),
             @ApiResponse(code = 404, message = "Erro de validacao")
     })
-    public void update(@PathVariable Integer id, @RequestBody @Valid ClienteDTO clienteDTO){
-         service
-                .obterCliente(id)
-                .map( clienteExistente -> {
-                    Cliente cliente = converterEmEnity(clienteDTO);
-                    cliente.setId(clienteExistente.getId());
-                    service.salvar(cliente);
-                    return  clienteExistente;
-                } ).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                 "Cliente nao encontrado"));
+    public ResponseEntity update(@PathVariable Integer id, @RequestBody @Valid ClienteDTO clienteDTO){
+
+        Cliente clienteAtualizado = service
+                    .obterCliente(id)
+                    .map( clienteExistente -> {
+                        Cliente cliente = converterEmEnity(clienteDTO);
+                        cliente.setId(clienteExistente.getId());
+                        service.salvar(cliente);
+                        return  clienteExistente;
+                    } ).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                     "Cliente nao encontrado"));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(clienteAtualizado);
     }
 
     @GetMapping
