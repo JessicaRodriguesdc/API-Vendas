@@ -53,9 +53,9 @@ public class ClienteController {
 
         Cliente cliente = modelMapper.map(clienteDTO,Cliente.class);
 
-        service.salvar(cliente);
+        Cliente clienteSalvo = service.salvar(cliente);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteSalvo);
     }
 
 

@@ -7,6 +7,7 @@ br\com\sistemavendas\security\jwt\JwtService.class
 br\com\sistemavendas\domain\entity\Cliente$ClienteBuilder.class
 br\com\sistemavendas\service\PedidoService.class
 br\com\sistemavendas\rest\dto\AtualizacaoStatusPedidoDTO.class
+br\com\sistemavendas\rest\dto\ClienteDTO$ClienteDTOBuilder.class
 br\com\sistemavendas\rest\controller\ClienteController.class
 br\com\sistemavendas\rest\dto\InformacaoItemPedidoDTO.class
 br\com\sistemavendas\domain\entity\ItemPedido.class

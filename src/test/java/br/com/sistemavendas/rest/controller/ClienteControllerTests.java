@@ -28,9 +28,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.thymeleaf.spring5.expression.Mvc;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
+import java.util.Optional;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -80,7 +82,43 @@ public class ClienteControllerTests {
 
         //verificacao
         mvc.perform(request)
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("id").isNotEmpty())
+                .andExpect(jsonPath("id").value(clienteFake.getId()))
+                .andExpect(jsonPath("nome").value(clienteFake.getNome()))
+                .andExpect(jsonPath("cpf").value(clienteFake.getCpf()));
+
+    }
+
+    @Test
+    @DisplayName("Deve buscar o cliente pelo id.")
+    @WithMockUser
+    public void getClienteByIdTest() throws Exception{
+        //cenario
+        Integer id = 1;
+        ClienteDTO dto = prepararClienteDTO();
+        Cliente clienteFake = Cliente.builder()
+                .id(id)
+                .nome(dto.getNome())
+                .cpf(dto.getCpf())
+                .build();
+
+        BDDMockito.given(service.obterCliente(id))
+                .willReturn(Optional.of(clienteFake));
+
+        //execulcao
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(api_cliente+"/"+id)
+                .with(csrf())
+                .accept(MediaType.APPLICATION_JSON);
+
+        //verificacao
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").isNotEmpty())
+                .andExpect(jsonPath("id").value(clienteFake.getId()))
+                .andExpect(jsonPath("nome").value(clienteFake.getNome()))
+                .andExpect(jsonPath("cpf").value(clienteFake.getCpf()));
     }
 
     public ClienteDTO prepararClienteDTO(){
