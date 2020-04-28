@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: br.com.sistemavendas.VendasApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.242 s - in br.com.sistemavendas.VendasApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 22.896 s - in br.com.sistemavendas.VendasApplicationTests
