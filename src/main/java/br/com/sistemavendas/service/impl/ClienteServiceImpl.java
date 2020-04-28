@@ -3,7 +3,6 @@ package br.com.sistemavendas.service.impl;
 import br.com.sistemavendas.domain.entity.Cliente;
 import br.com.sistemavendas.domain.repository.Clientes;
 import br.com.sistemavendas.exception.RegraNegocioException;
-import br.com.sistemavendas.rest.dto.ClienteDTO;
 import br.com.sistemavendas.service.ClienteService;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;

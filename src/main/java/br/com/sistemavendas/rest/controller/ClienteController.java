@@ -21,12 +21,10 @@ import java.util.List;
 @Api("Api Clientes")
 public class ClienteController {
 
-    private Clientes clientes;
     private ModelMapper modelMapper;
     private ClienteService service;
 
-    public ClienteController(Clientes clientes,ModelMapper modelMapper,ClienteService service) {
-        this.clientes = clientes;
+    public ClienteController(ModelMapper modelMapper,ClienteService service) {
         this.modelMapper = modelMapper;
         this.service = service;
     }
@@ -57,7 +55,7 @@ public class ClienteController {
 
         service.salvar(cliente);
 
-        return ResponseEntity.ok(clienteDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
     }
 
 
