@@ -103,7 +103,7 @@ public class ClienteControllerTests {
                 .cpf(dto.getCpf())
                 .build();
 
-        BDDMockito.given(service.obterCliente(id))
+        BDDMockito.given(service.obterCliente(Mockito.anyInt()))
                 .willReturn(Optional.of(clienteFake));
 
         //execulcao
@@ -134,7 +134,7 @@ public class ClienteControllerTests {
                 .cpf(dto.getCpf())
                 .build();
 
-        BDDMockito.given(service.obterCliente(id))
+        BDDMockito.given(service.obterCliente(Mockito.anyInt()))
                 .willReturn(Optional.of(clienteFake));
         BDDMockito.given(service.atualizar(Mockito.anyInt(),Mockito.any(Cliente.class)))
                 .willReturn(clienteFake);
@@ -158,7 +158,33 @@ public class ClienteControllerTests {
                 .andExpect(jsonPath("cpf").value(clienteFake.getCpf()));
     }
 
+    @Test
+    @DisplayName("Deve deletar um cliente existente.")
+    @WithMockUser
+    public void deletarClienteTest() throws Exception{
+        //cenario
+        Integer id = 1;
+        ClienteDTO dto = prepararClienteDTO();
+        Cliente clienteFake = Cliente.builder()
+                .id(id)
+                .nome(dto.getNome())
+                .cpf(dto.getCpf())
+                .build();
 
+
+        BDDMockito.given(service.obterCliente(Mockito.anyInt()))
+                .willReturn(Optional.of(clienteFake));
+
+        //execucao
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(api_cliente+"/"+id)
+                .with(csrf())
+                .accept(MediaType.APPLICATION_JSON);
+
+        //verificacao
+        mvc.perform(request)
+                .andExpect(status().isNoContent());
+    }
     public ClienteDTO prepararClienteDTO(){
         return new ClienteDTO("jessica","93229667000");
     }

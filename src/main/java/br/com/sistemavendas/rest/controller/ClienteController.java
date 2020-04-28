@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -74,6 +75,7 @@ public class ClienteController {
                 })
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Cliente nao encontrado"));
+
     }
 
     @PutMapping("{id}")
