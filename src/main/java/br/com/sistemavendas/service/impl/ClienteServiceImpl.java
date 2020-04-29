@@ -5,6 +5,9 @@ import br.com.sistemavendas.domain.repository.Clientes;
 import br.com.sistemavendas.exception.RegraNegocioException;
 import br.com.sistemavendas.service.ClienteService;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,9 +47,15 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public List<Cliente> listar(Example examplecliente) {
-        List<Cliente> example = repository.findAll(examplecliente);
-        return example;
+    public List<Cliente> listar(Cliente cliente) {
+        Example<Cliente> example = Example.of(cliente,
+                ExampleMatcher
+                        .matching()
+                        .withIgnoreCase()
+                        .withIgnoreNullValues()
+                        .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+        );
+        return repository.findAll(example);
     }
 
     @Override

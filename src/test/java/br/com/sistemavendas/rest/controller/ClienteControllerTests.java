@@ -8,6 +8,7 @@ import br.com.sistemavendas.service.ClienteService;
 import br.com.sistemavendas.service.impl.ClienteServiceImpl;
 import br.com.sistemavendas.service.impl.UsuarioServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.models.auth.In;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.*;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -31,8 +33,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.thymeleaf.spring5.expression.Mvc;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.*;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -42,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @ContextConfiguration(classes = {ClienteController.class, ClienteService.class
-        , PasswordEncoder.class, JwtService.class, ClienteDTO.class , ModelMapper.class})
+        ,PasswordEncoder.class, JwtService.class, ClienteDTO.class ,ModelMapper.class})
 @WebMvcTest(controllers = ClienteController.class)
 @AutoConfigureMockMvc
 public class ClienteControllerTests {
@@ -103,7 +104,7 @@ public class ClienteControllerTests {
                 .cpf(dto.getCpf())
                 .build();
 
-        BDDMockito.given(service.obterCliente(id))
+        BDDMockito.given(service.obterCliente(Mockito.anyInt()))
                 .willReturn(Optional.of(clienteFake));
 
         //execulcao
@@ -121,8 +122,102 @@ public class ClienteControllerTests {
                 .andExpect(jsonPath("cpf").value(clienteFake.getCpf()));
     }
 
+    @Test
+    @DisplayName("Deve atualizar um cliente existente.")
+    @WithMockUser
+    public void atualizarClienteTest() throws Exception{
+        //cenario
+        Integer id = 1;
+        ClienteDTO dto = prepararClienteDTO();
+        Cliente clienteFake = Cliente.builder()
+                .id(id)
+                .nome("jessica rodrigues")
+                .cpf(dto.getCpf())
+                .build();
+
+        BDDMockito.given(service.obterCliente(Mockito.anyInt()))
+                .willReturn(Optional.of(clienteFake));
+        BDDMockito.given(service.atualizar(Mockito.anyInt(),Mockito.any(Cliente.class)))
+                .willReturn(clienteFake);
+
+        String json = new ObjectMapper().writeValueAsString(dto);
+
+        //execucao
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .put(api_cliente+"/"+id)
+                .with(csrf())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        //verificacao
+        mvc.perform(request)
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("id").isNotEmpty())
+                .andExpect(jsonPath("id").value(clienteFake.getId()))
+                .andExpect(jsonPath("nome").value(clienteFake.getNome()))
+                .andExpect(jsonPath("cpf").value(clienteFake.getCpf()));
+    }
+
+    @Test
+    @DisplayName("Deve deletar um cliente existente.")
+    @WithMockUser
+    public void deletarClienteTest() throws Exception{
+        //cenario
+        Integer id = 1;
+        ClienteDTO dto = prepararClienteDTO();
+        Cliente clienteFake = Cliente.builder()
+                .id(id)
+                .nome(dto.getNome())
+                .cpf(dto.getCpf())
+                .build();
+
+
+        BDDMockito.given(service.obterCliente(Mockito.anyInt()))
+                .willReturn(Optional.of(clienteFake));
+
+        //execucao
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(api_cliente+"/"+id)
+                .with(csrf())
+                .accept(MediaType.APPLICATION_JSON);
+
+        //verificacao
+        mvc.perform(request)
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("Deve listar clientes.")
+    @WithMockUser
+    public void listarClienteTest() throws Exception{
+        //cenario
+        ClienteDTO dto = prepararClienteDTO();
+        Cliente clienteFake = Cliente.builder()
+                .id(1)
+                .nome(dto.getNome())
+                .cpf(dto.getCpf())
+                .build();
+
+        List<Cliente> ListaClientesFakes = new ArrayList<Cliente>();
+        ListaClientesFakes.add(clienteFake);
+
+        BDDMockito.given(service.listar(Mockito.any(Cliente.class)))
+                .willReturn(ListaClientesFakes);
+
+        //execucao
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(api_cliente)
+                .accept(MediaType.APPLICATION_JSON);
+
+        //verificacao
+        mvc.perform(request)
+                .andExpect(status().isOk());
+    }
+
     public ClienteDTO prepararClienteDTO(){
         return new ClienteDTO("jessica","93229667000");
     }
+
 
 }
