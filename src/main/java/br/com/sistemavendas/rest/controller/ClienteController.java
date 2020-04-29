@@ -6,8 +6,8 @@ import br.com.sistemavendas.rest.dto.ClienteDTO;
 import br.com.sistemavendas.service.ClienteService;
 import io.swagger.annotations.*;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.*;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/clientes")
@@ -105,16 +106,17 @@ public class ClienteController {
             @ApiResponse(code = 200, message = "Cliente(s) encontrado(s)"),
             @ApiResponse(code = 404, message = "Erro de validacao")
     })
-    public List<Cliente> find(Cliente filtro){
-        ExampleMatcher matcher = ExampleMatcher
-                .matching()
-                .withIgnoreCase()
-                .withStringMatcher(
-                        ExampleMatcher.StringMatcher.CONTAINING );
-        Example example = Example.of(filtro,matcher);
-        return service.listar(example);
-    }
+    public List<ClienteDTO> find(ClienteDTO clienteDTO){
+        Cliente cliente = converterEmEnity(clienteDTO);
+        List<Cliente> clientes = service.listar(cliente);
 
+        List<ClienteDTO> clientesDTO = clientes
+                .stream()
+                .map(entity -> converterEmDTO(entity))
+                .collect(Collectors.toList());
+
+        return clientesDTO;
+    }
 
     private ClienteDTO converterEmDTO(Cliente cliente){
         ClienteDTO dto = modelMapper.map(cliente,ClienteDTO.class);
