@@ -1,5 +1,6 @@
 br\com\sistemavendas\rest\controller\UsuarioControllerTests.class
 br\com\sistemavendas\domain\repository\UsuarioRepositoryTests.class
 br\com\sistemavendas\service\ClienteServiceTests.class
+br\com\sistemavendas\domain\repository\ClienteRepositoryTests.class
 br\com\sistemavendas\rest\controller\ClienteControllerTests.class
 br\com\sistemavendas\VendasApplicationTests.class
