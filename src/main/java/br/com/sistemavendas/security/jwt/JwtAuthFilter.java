@@ -1,6 +1,6 @@
 package br.com.sistemavendas.security.jwt;
 
-import br.com.sistemavendas.service.impl.UsuarioServiceImpl;
+import br.com.sistemavendas.usuario.service.impl.UsuarioServiceImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
