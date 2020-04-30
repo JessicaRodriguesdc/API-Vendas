@@ -1,7 +1,7 @@
 package br.com.sistemavendas.security.jwt;
 
 import br.com.sistemavendas.VendasApplication;
-import br.com.sistemavendas.domain.entity.Usuario;
+import br.com.sistemavendas.usuario.entity.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

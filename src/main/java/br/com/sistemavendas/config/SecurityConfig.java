@@ -2,7 +2,7 @@ package br.com.sistemavendas.config;
 
 import br.com.sistemavendas.security.jwt.JwtAuthFilter;
 import br.com.sistemavendas.security.jwt.JwtService;
-import br.com.sistemavendas.service.impl.UsuarioServiceImpl;
+import br.com.sistemavendas.usuario.service.impl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
