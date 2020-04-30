@@ -160,6 +160,7 @@ public class ClienteServiceTests {
         assertThat(listaClientes.get(0).getNome()).isEqualTo(clienteFake.getNome());
         assertThat(listaClientes.get(0).getCpf()).isEqualTo(clienteFake.getCpf());
     }
+
     public ClienteDTO prepararClienteDTO(){
         return new ClienteDTO("jessica","93229667000");
     }
