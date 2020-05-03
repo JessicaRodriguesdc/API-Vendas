@@ -2,6 +2,7 @@ package br.com.sistemavendas.usuario.service.impl;
 
 import br.com.sistemavendas.usuario.repository.UsuarioRepository;
 import br.com.sistemavendas.usuario.entity.Usuario;
+import br.com.sistemavendas.usuario.service.UsuarioService;
 import br.com.sistemavendas.util.exception.SenhaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -12,19 +13,42 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
-public class UsuarioServiceImpl implements UserDetailsService {
+public class UsuarioAuthServiceImpl implements UsuarioService,UserDetailsService {
     @Autowired
     private PasswordEncoder encoder;
 
     @Autowired
     private UsuarioRepository repository;
 
-    @Transactional
+    @Override
     public Usuario salvar (Usuario usuario){
         return repository.save(usuario);
     }
 
+    @Override
+    public Usuario atualizar(Integer id, Usuario usuario) {
+        return null;
+    }
+
+    @Override
+    public Optional<Usuario> obterCliente(Integer id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<Usuario> listar(Usuario usuario) {
+        return null;
+    }
+
+    @Override
+    public void deletar(Usuario usuario) {
+
+    }
+    
     public UserDetails autenticar(Usuario usuario){
         UserDetails user = loadUserByUsername(usuario.getLogin());
         boolean senhasBatem =  encoder.matches(usuario.getSenha(),user.getPassword());
@@ -50,4 +74,6 @@ public class UsuarioServiceImpl implements UserDetailsService {
                 .roles(roles)
                 .build();
     }
+
+
 }
