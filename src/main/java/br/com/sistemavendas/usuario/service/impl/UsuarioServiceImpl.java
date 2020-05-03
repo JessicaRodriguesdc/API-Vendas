@@ -6,6 +6,8 @@ import br.com.sistemavendas.usuario.service.UsuarioService;
 import br.com.sistemavendas.util.exception.RegraNegocioException;
 import br.com.sistemavendas.util.exception.SenhaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -43,18 +45,29 @@ public class UsuarioServiceImpl implements UsuarioService,UserDetailsService {
 
     @Override
     public Optional<Usuario> obterUsuario(Integer id) {
-        Optional<Usuario> usuario = 
-        return Optional.empty();
+        Optional<Usuario> usuario = repository.findById(id);
+        return usuario;
     }
 
     @Override
     public List<Usuario> listar(Usuario usuario) {
-        return null;
+        Example<Usuario> example = Example.of(usuario,
+                ExampleMatcher
+                    .matching()
+                    .withIgnoreCase()
+                    .withIgnoreNullValues()
+                    .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+        );
+        return repository.findAll(example);
     }
 
     @Override
     public void deletar(Usuario usuario) {
-
+        Optional<Usuario> existe = obterUsuario(usuario.getId());
+        if(!existe.isPresent()){
+            throw new RegraNegocioException("Usuario nao encontrado");
+        }
+        repository.delete(usuario);
     }
 
     public UserDetails autenticar(Usuario usuario){
@@ -82,6 +95,5 @@ public class UsuarioServiceImpl implements UsuarioService,UserDetailsService {
                 .roles(roles)
                 .build();
     }
-
 
 }

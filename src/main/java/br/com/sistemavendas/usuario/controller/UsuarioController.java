@@ -35,6 +35,7 @@ public class UsuarioController {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final UsuarioRepository usuarioRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
