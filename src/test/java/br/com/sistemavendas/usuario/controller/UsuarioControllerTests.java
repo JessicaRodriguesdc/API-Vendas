@@ -1,6 +1,5 @@
 package br.com.sistemavendas.usuario.controller;
 
-import br.com.sistemavendas.usuario.controller.UsuarioController;
 import br.com.sistemavendas.usuario.entity.Usuario;
 import br.com.sistemavendas.security.jwt.JwtService;
 import br.com.sistemavendas.usuario.service.impl.UsuarioServiceImpl;

@@ -1,6 +1,8 @@
 package br.com.sistemavendas.usuario.controller;
 
+import br.com.sistemavendas.cliente.dto.ClienteDTO;
 import br.com.sistemavendas.cliente.entity.Cliente;
+import br.com.sistemavendas.usuario.dto.UsuarioDTO;
 import br.com.sistemavendas.usuario.entity.Usuario;
 import br.com.sistemavendas.usuario.repository.UsuarioRepository;
 import br.com.sistemavendas.util.exception.SenhaInvalidaException;
@@ -8,11 +10,9 @@ import br.com.sistemavendas.util.rest.dto.CredenciaisDTO;
 import br.com.sistemavendas.util.rest.dto.TokenDTO;
 import br.com.sistemavendas.security.jwt.JwtService;
 import br.com.sistemavendas.usuario.service.impl.UsuarioServiceImpl;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -27,13 +27,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/usuarios")
+@Api("Api Usuarios")
 @RequiredArgsConstructor
 public class UsuarioController {
 
     private final UsuarioServiceImpl usuarioService;
+    private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final UsuarioRepository usuarioRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -135,6 +136,18 @@ public class UsuarioController {
                         ExampleMatcher.StringMatcher.CONTAINING );
         Example example = Example.of(filtro,matcher);
         return usuarioRepository.findAll(example);
+    }
+
+    private UsuarioDTO converterEmDTO(Usuario usuario){
+        UsuarioDTO dto = modelMapper.map(usuario,UsuarioDTO.class);
+
+        return dto;
+    }
+
+    private Usuario converterEmEntity(UsuarioDTO dto){
+        Usuario usuario = modelMapper.map(dto,Usuario.class);
+
+        return usuario;
     }
 }
 

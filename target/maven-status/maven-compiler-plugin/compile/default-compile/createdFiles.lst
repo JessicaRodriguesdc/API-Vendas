@@ -20,6 +20,7 @@ br\com\sistemavendas\util\rest\controller\ApplicationControllerAdvice.class
 br\com\sistemavendas\usuario\controller\UsuarioController.class
 br\com\sistemavendas\produto\entity\Produto.class
 br\com\sistemavendas\pedido\dto\AtualizacaoStatusPedidoDTO.class
+br\com\sistemavendas\produto\dto\ProdutoDTO.class
 br\com\sistemavendas\itemPedido\entity\ItemPedido.class
 br\com\sistemavendas\pedido\dto\InformacoesPedidoDTO.class
 br\com\sistemavendas\config\SwaggerConfig.class
@@ -30,6 +31,8 @@ br\com\sistemavendas\VendasApplication.class
 br\com\sistemavendas\pedido\enums\StatusPedido.class
 br\com\sistemavendas\cliente\entity\Cliente$ClienteBuilder.class
 br\com\sistemavendas\security\jwt\JwtAuthFilter.class
+br\com\sistemavendas\produto\service\impl\ProdutoServiceImpl.class
+br\com\sistemavendas\produto\dto\ProdutoDTO$ProdutoDTOBuilder.class
 br\com\sistemavendas\cliente\dto\ClienteDTO$ClienteDTOBuilder.class
 br\com\sistemavendas\itemPedido\dto\ItemPedidoDTO.class
 br\com\sistemavendas\cliente\repository\ClienteRepository.class
@@ -39,6 +42,7 @@ br\com\sistemavendas\validation\NotEmptyList.class
 br\com\sistemavendas\pedido\dto\InformacoesPedidoDTO$InformacoesPedidoDTOBuilder.class
 br\com\sistemavendas\produto\repository\ProdutoRepository.class
 br\com\sistemavendas\config\InternacionalizacaoConfig.class
+br\com\sistemavendas\produto\service\ProdutoService.class
 br\com\sistemavendas\pedido\dto\PedidoDTO.class
 br\com\sistemavendas\util\rest\dto\TokenDTO.class
 br\com\sistemavendas\validation\constraintvalidation\NotEmptyListValidator.class
