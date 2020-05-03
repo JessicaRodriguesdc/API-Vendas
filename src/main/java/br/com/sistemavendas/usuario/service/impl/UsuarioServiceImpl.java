@@ -2,27 +2,72 @@ package br.com.sistemavendas.usuario.service.impl;
 
 import br.com.sistemavendas.usuario.repository.UsuarioRepository;
 import br.com.sistemavendas.usuario.entity.Usuario;
+import br.com.sistemavendas.usuario.service.UsuarioService;
+import br.com.sistemavendas.util.exception.RegraNegocioException;
 import br.com.sistemavendas.util.exception.SenhaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UsuarioServiceImpl implements UserDetailsService {
+public class UsuarioServiceImpl implements UsuarioService,UserDetailsService {
     @Autowired
     private PasswordEncoder encoder;
 
     @Autowired
     private UsuarioRepository repository;
 
-    @Transactional
+    @Override
     public Usuario salvar (Usuario usuario){
+
         return repository.save(usuario);
+    }
+
+    @Override
+    public Usuario atualizar(Integer id, Usuario usuario) {
+        Optional<Usuario> existe = obterUsuario(id);
+        if(!existe.isPresent()){
+            throw new RegraNegocioException("Usuario nao encontrado");
+        }
+        usuario.setId(id);
+        Usuario usuarioSalvo = salvar(usuario);
+        return usuarioSalvo;
+    }
+
+    @Override
+    public Optional<Usuario> obterUsuario(Integer id) {
+        Optional<Usuario> usuario = repository.findById(id);
+        return usuario;
+    }
+
+    @Override
+    public List<Usuario> listar(Usuario usuario) {
+        Example<Usuario> example = Example.of(usuario,
+                ExampleMatcher
+                    .matching()
+                    .withIgnoreCase()
+                    .withIgnoreNullValues()
+                    .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+        );
+        return repository.findAll(example);
+    }
+
+    @Override
+    public void deletar(Usuario usuario) {
+        Optional<Usuario> existe = obterUsuario(usuario.getId());
+        if(!existe.isPresent()){
+            throw new RegraNegocioException("Usuario nao encontrado");
+        }
+        repository.delete(usuario);
     }
 
     public UserDetails autenticar(Usuario usuario){
@@ -50,4 +95,5 @@ public class UsuarioServiceImpl implements UserDetailsService {
                 .roles(roles)
                 .build();
     }
+
 }

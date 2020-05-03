@@ -12,10 +12,12 @@ C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\c
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\validation\NotEmptyList.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\pedido\service\PedidoService.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\config\InternacionalizacaoConfig.java
+C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\produto\service\impl\ProdutoServiceImpl.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\util\exception\PedidoNaoEncontradoException.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\config\DBConfiguration.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\security\jwt\JwtAuthFilter.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\usuario\service\impl\UsuarioServiceImpl.java
+C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\produto\dto\ProdutoDTO.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\pedido\repository\PedidoRepository.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\config\SwaggerConfig.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\usuario\controller\UsuarioController.java
@@ -31,6 +33,7 @@ C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\c
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\pedido\entity\Pedido.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\security\jwt\JwtService.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\cliente\repository\ClienteRepository.java
+C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\produto\service\ProdutoService.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\pedido\controller\PedidoController.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\pedido\enums\StatusPedido.java
 C:\Users\jessi\OneDrive\Área de Trabalho\Arquivos\API-Vendas\src\main\java\br\com\sistemavendas\util\rest\dto\TokenDTO.java

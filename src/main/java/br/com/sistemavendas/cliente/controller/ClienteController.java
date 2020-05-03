@@ -49,7 +49,7 @@ public class ClienteController {
     })
     public ResponseEntity save(@RequestBody @Valid ClienteDTO clienteDTO){
 
-        Cliente cliente = modelMapper.map(clienteDTO,Cliente.class);
+        Cliente cliente = converterEmEntity(clienteDTO);
 
         Cliente clienteSalvo = service.salvar(cliente);
 
@@ -87,7 +87,7 @@ public class ClienteController {
         Cliente clienteAtualizado = service
                     .obterCliente(id)
                     .map( clienteExistente -> {
-                        Cliente cliente = converterEmEnity(clienteDTO);
+                        Cliente cliente = converterEmEntity(clienteDTO);
                         cliente.setId(clienteExistente.getId());
                         service.salvar(cliente);
                         return  clienteExistente;
@@ -103,7 +103,7 @@ public class ClienteController {
             @ApiResponse(code = 404, message = "Erro de validacao")
     })
     public List<ClienteDTO> find(ClienteDTO clienteDTO){
-        Cliente cliente = converterEmEnity(clienteDTO);
+        Cliente cliente = converterEmEntity(clienteDTO);
         List<Cliente> clientes = service.listar(cliente);
 
         List<ClienteDTO> clientesDTO = clientes
@@ -120,8 +120,8 @@ public class ClienteController {
         return dto;
     }
 
-    private Cliente converterEmEnity(ClienteDTO clienteDTO){
-        Cliente cliente = modelMapper.map(clienteDTO,Cliente.class);
+    private Cliente converterEmEntity(ClienteDTO dto){
+        Cliente cliente = modelMapper.map(dto,Cliente.class);
 
         return cliente;
     }

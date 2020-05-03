@@ -60,9 +60,8 @@ public class ClienteServiceImpl implements ClienteService {
     public void deletar(Cliente cliente) {
         Optional<Cliente> existe = obterCliente(cliente.getId());
         if(!existe.isPresent()){
+            throw new RegraNegocioException("Cliente nao encontrado");
         }
         repository.delete(cliente);
     }
-
-
 }
