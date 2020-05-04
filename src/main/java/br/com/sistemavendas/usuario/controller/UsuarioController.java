@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -29,7 +28,7 @@ public class UsuarioController {
 
     private final UsuarioServiceImpl service;
     private final ModelMapper modelMapper;
-    private final PasswordEncoder passwordEncoder;
+    //private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
     @PostMapping
@@ -41,9 +40,7 @@ public class UsuarioController {
     })
     public ResponseEntity salvar(@RequestBody @Valid UsuarioDTO usuarioDTO){
         Usuario usuario = converterEmEntity(usuarioDTO);
-        String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
 
-        usuario.setSenha(senhaCriptografada);
         Usuario usuarioSalvo = service.salvar(usuario);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvo);
@@ -64,8 +61,9 @@ public class UsuarioController {
             UserDetails usuarioAutentificado = service.autenticar(usuario);
 
             String token = jwtService.gerarToken(usuario);
+            String tokenFormatado = "Bearer"+" "+token;
 
-            return new TokenDTO(usuario.getLogin(), token);
+            return new TokenDTO(usuario.getLogin(), tokenFormatado);
 
         }catch (UsernameNotFoundException  | SenhaInvalidaException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());

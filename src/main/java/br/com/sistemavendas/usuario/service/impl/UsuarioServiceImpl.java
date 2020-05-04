@@ -20,14 +20,26 @@ import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService,UserDetailsService {
+
     @Autowired
     private PasswordEncoder encoder;
 
     @Autowired
     private UsuarioRepository repository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
+    private String criptografarSenha(String senha){
+        String senhaCriptografada = passwordEncoder.encode(senha);
+
+        return senhaCriptografada;
+    }
+
     @Override
     public Usuario salvar (Usuario usuario){
+        usuario.setSenha(criptografarSenha(usuario.getSenha()));
 
         return repository.save(usuario);
     }
@@ -39,6 +51,7 @@ public class UsuarioServiceImpl implements UsuarioService,UserDetailsService {
             throw new RegraNegocioException("Usuario nao encontrado");
         }
         usuario.setId(id);
+        usuario.setSenha(criptografarSenha(usuario.getSenha()));
         Usuario usuarioSalvo = salvar(usuario);
         return usuarioSalvo;
     }
