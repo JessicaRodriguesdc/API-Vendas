@@ -1,10 +1,6 @@
 package br.com.sistemavendas.usuario.controller;
-
-import br.com.sistemavendas.cliente.dto.ClienteDTO;
-import br.com.sistemavendas.cliente.entity.Cliente;
 import br.com.sistemavendas.usuario.dto.UsuarioDTO;
 import br.com.sistemavendas.usuario.entity.Usuario;
-import br.com.sistemavendas.usuario.repository.UsuarioRepository;
 import br.com.sistemavendas.util.exception.SenhaInvalidaException;
 import br.com.sistemavendas.util.rest.dto.CredenciaisDTO;
 import br.com.sistemavendas.util.rest.dto.TokenDTO;
@@ -13,9 +9,8 @@ import br.com.sistemavendas.usuario.service.impl.UsuarioServiceImpl;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -31,11 +27,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsuarioController {
 
-    private final UsuarioServiceImpl usuarioService;
+    private final UsuarioServiceImpl service;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final UsuarioRepository usuarioRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -44,10 +39,14 @@ public class UsuarioController {
             @ApiResponse(code = 201, message = "Usuario salvo com sucesso"),
             @ApiResponse(code = 404, message = "Erro de validacao")
     })
-    public Usuario salvar(@RequestBody @Valid Usuario usuario){
+    public ResponseEntity salvar(@RequestBody @Valid UsuarioDTO usuarioDTO){
+        Usuario usuario = converterEmEntity(usuarioDTO);
         String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
+
         usuario.setSenha(senhaCriptografada);
-        return usuarioService.salvar(usuario);
+        Usuario usuarioSalvo = service.salvar(usuario);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvo);
     }
 
     @PostMapping("/auth")
@@ -62,7 +61,7 @@ public class UsuarioController {
                     .login(credenciais.getLogin())
                     .senha(credenciais.getSenha()).build();
 
-            UserDetails usuarioAutentificado = usuarioService.autenticar(usuario);
+            UserDetails usuarioAutentificado = service.autenticar(usuario);
 
             String token = jwtService.gerarToken(usuario);
 
@@ -81,12 +80,11 @@ public class UsuarioController {
             @ApiResponse(code = 404, message = "Usuario nao encontrado para o ID informado")
     })
     public Usuario getById(@PathVariable @ApiParam("id do usuario") Integer id){
-        return usuarioRepository
-                .findById(id)
+        return service
+                .obterUsuario(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Usuario nao encontrado"));
     }
-
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -96,9 +94,9 @@ public class UsuarioController {
             @ApiResponse(code = 404, message = "Erro de validacao")
     })
     public void delete (@PathVariable Integer id){
-        usuarioRepository.findById((id))
+        service.obterUsuario(id)
                 .map(usuario -> {
-                    usuarioRepository.delete(usuario);
+                    service.deletar(usuario);
                     return usuario;
                 })
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -112,15 +110,19 @@ public class UsuarioController {
             @ApiResponse(code = 204, message = "Usuario atualizado com sucesso"),
             @ApiResponse(code = 404, message = "Erro de validacao")
     })
-    public void update(@PathVariable Integer id, @RequestBody @Valid Usuario usuario){
-        usuarioRepository
-                .findById(id)
-                .map( usuarioExistente -> {
-                    usuario.setId(usuarioExistente.getId());
-                    usuarioRepository.save(usuario);
-                    return  usuarioExistente;
-                } ).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Usuario nao encontrado"));
+    public ResponseEntity update(@PathVariable Integer id, @RequestBody @Valid UsuarioDTO usuarioDTO){
+
+        Usuario usuarioAtualizado = service
+                    .obterUsuario(id)
+                    .map( usuarioExistente -> {
+                     Usuario usuario = converterEmEntity(usuarioDTO);
+                        usuario.setId(usuarioExistente.getId());
+                        service.salvar(usuario);
+                        return  usuarioExistente;
+                    } ).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Usuario nao encontrado"));
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(usuarioAtualizado);
     }
 
     @GetMapping
@@ -129,14 +131,16 @@ public class UsuarioController {
             @ApiResponse(code = 200, message = "Usuario(s) encontrado(s)"),
             @ApiResponse(code = 404, message = "Erro de validacao")
     })
-    public List<Cliente> find(Usuario filtro){
-        ExampleMatcher matcher = ExampleMatcher
-                .matching()
-                .withIgnoreCase()
-                .withStringMatcher(
-                        ExampleMatcher.StringMatcher.CONTAINING );
-        Example example = Example.of(filtro,matcher);
-        return usuarioRepository.findAll(example);
+    public List<UsuarioDTO> find(UsuarioDTO usuarioDTO){
+        Usuario usuario = converterEmEntity(usuarioDTO);
+        List<Usuario> usuarios = service.listar(usuario);
+
+        List<UsuarioDTO> usuariosDTO = usuarios
+                .stream()
+                .map(entity -> converterEmDTO(entity))
+                .collect(Collectors.toList());
+
+        return usuariosDTO;
     }
 
     private UsuarioDTO converterEmDTO(Usuario usuario){
