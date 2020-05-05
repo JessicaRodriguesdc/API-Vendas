@@ -90,7 +90,7 @@ public class ClienteRepositoryTests {
 
         //verificacao
         assertThat(clienteAlterado.getId()).isNotNull();
-        assertThat(clienteAlterado.getId()).isEqualTo(clienteAlterado.getId());
+        assertThat(clienteAlterado.getId()).isEqualTo(clienteEncontrado.get().getId());
         assertThat(clienteAlterado.getNome()).isEqualTo(clienteEncontrado.get().getNome());
     }
 
