@@ -16,6 +16,7 @@ br\com\sistemavendas\util\rest\api\ApiErrors.class
 br\com\sistemavendas\usuario\service\impl\UsuarioServiceImpl.class
 br\com\sistemavendas\usuario\repository\UsuarioRepository.class
 br\com\sistemavendas\cliente\dto\ClienteDTO.class
+br\com\sistemavendas\usuario\dto\UsuarioDTO.class
 br\com\sistemavendas\util\rest\controller\ApplicationControllerAdvice.class
 br\com\sistemavendas\usuario\controller\UsuarioController.class
 br\com\sistemavendas\produto\entity\Produto.class
@@ -23,8 +24,11 @@ br\com\sistemavendas\pedido\dto\AtualizacaoStatusPedidoDTO.class
 br\com\sistemavendas\produto\dto\ProdutoDTO.class
 br\com\sistemavendas\itemPedido\entity\ItemPedido.class
 br\com\sistemavendas\pedido\dto\InformacoesPedidoDTO.class
+br\com\sistemavendas\usuario\service\UsuarioService.class
+br\com\sistemavendas\usuario\dto\UsuarioDTO$UsuarioDTOBuilder.class
 br\com\sistemavendas\config\SwaggerConfig.class
 br\com\sistemavendas\pedido\repository\PedidoRepository.class
+br\com\sistemavendas\produto\entity\Produto$ProdutoBuilder.class
 br\com\sistemavendas\util\rest\dto\CredenciaisDTO.class
 br\com\sistemavendas\util\exception\RegraNegocioException.class
 br\com\sistemavendas\VendasApplication.class
