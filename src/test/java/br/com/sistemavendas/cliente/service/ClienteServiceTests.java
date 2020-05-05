@@ -50,7 +50,7 @@ public class ClienteServiceTests {
 
         Mockito.when(repository.save(Mockito.any(Cliente.class))).thenReturn(clienteFake);
         //execulcao
-       Cliente clienteSalvo =  service.salvar(clienteFake);
+        Cliente clienteSalvo =  service.salvar(clienteFake);
 
         //verificacao
         assertThat(clienteSalvo.getId()).isNotNull();
@@ -74,13 +74,13 @@ public class ClienteServiceTests {
         Mockito.when(repository.findById(Mockito.anyInt())).thenReturn(Optional.of(clienteFake));
 
         //execulcao
-        Optional<Cliente> cliemteEncontrado = service.obterCliente(id);
+        Optional<Cliente> clienteEncontrado = service.obterCliente(id);
 
         //verificacao
-        assertThat(cliemteEncontrado.get().getId()).isNotNull();
-        assertThat(cliemteEncontrado.get().getId()).isEqualTo(clienteFake.getId());
-        assertThat(cliemteEncontrado.get().getNome()).isEqualTo(clienteFake.getNome());
-        assertThat(cliemteEncontrado.get().getCpf()).isEqualTo(clienteFake.getCpf());
+        assertThat(clienteEncontrado.get().getId()).isNotNull();
+        assertThat(clienteEncontrado.get().getId()).isEqualTo(clienteFake.getId());
+        assertThat(clienteEncontrado.get().getNome()).isEqualTo(clienteFake.getNome());
+        assertThat(clienteEncontrado.get().getCpf()).isEqualTo(clienteFake.getCpf());
 
     }
 
@@ -106,7 +106,6 @@ public class ClienteServiceTests {
         Cliente clienteAtualizado = service.atualizar(id,clienteFakeModificado);
 
         //verificacao
-       // assertThat(clienteAtualizado).isNotEqualTo(null);
         assertThat(clienteAtualizado.getId()).isNotNull();
         assertThat(clienteAtualizado.getId()).isEqualTo(clienteFakeModificado.getId());
         assertThat(clienteAtualizado.getNome()).isEqualTo(clienteFakeModificado.getNome());

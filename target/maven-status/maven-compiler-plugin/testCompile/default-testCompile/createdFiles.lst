@@ -1,3 +1,4 @@
+br\com\sistemavendas\produto\repository\ProdutoRepositoryTests.class
 br\com\sistemavendas\cliente\repository\ClienteRepositoryTests.class
 br\com\sistemavendas\produto\controller\ProdutoControllerTests.class
 br\com\sistemavendas\usuario\controller\UsuarioControllerTests.class
@@ -5,3 +6,4 @@ br\com\sistemavendas\cliente\service\ClienteServiceTests.class
 br\com\sistemavendas\usuario\repository\UsuarioRepositoryTests.class
 br\com\sistemavendas\VendasApplicationTests.class
 br\com\sistemavendas\cliente\controller\ClienteControllerTests.class
+br\com\sistemavendas\produto\service\ProdutoServiceTests.class
