@@ -185,9 +185,10 @@ public class ClienteControllerTests {
     @WithMockUser
     public void listarClienteTest() throws Exception{
         //cenario
+        Integer id = 1;
         ClienteDTO dto = prepararClienteDTO();
         Cliente clienteFake = Cliente.builder()
-                .id(1)
+                .id(id)
                 .nome(dto.getNome())
                 .cpf(dto.getCpf())
                 .build();

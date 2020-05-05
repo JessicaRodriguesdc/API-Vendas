@@ -186,7 +186,7 @@ public class ProdutoControllerTests {
     }
 
     @Test
-    @DisplayName("Deve listar clientes.")
+    @DisplayName("Deve listar produtos.")
     @WithMockUser
     public void listarClienteTest() throws Exception{
         //cenario
