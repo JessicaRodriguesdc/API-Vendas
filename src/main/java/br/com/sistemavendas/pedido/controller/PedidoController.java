@@ -8,13 +8,13 @@ import br.com.sistemavendas.pedido.dto.InformacoesPedidoDTO;
 import br.com.sistemavendas.pedido.dto.PedidoDTO;
 import br.com.sistemavendas.pedido.enums.StatusPedido;
 import br.com.sistemavendas.pedido.service.PedidoService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -25,6 +25,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/pedidos")
+@Api("Api Pedidos")
 public class PedidoController {
 
     private PedidoService service;
