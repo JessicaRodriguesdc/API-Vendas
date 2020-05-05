@@ -3,12 +3,14 @@ package br.com.sistemavendas.itemPedido.entity;
 import br.com.sistemavendas.pedido.entity.Pedido;
 import br.com.sistemavendas.produto.entity.Produto;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
