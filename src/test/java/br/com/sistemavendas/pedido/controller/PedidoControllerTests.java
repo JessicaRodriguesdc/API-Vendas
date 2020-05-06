@@ -13,6 +13,7 @@ import br.com.sistemavendas.produto.entity.Produto;
 import br.com.sistemavendas.security.jwt.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
@@ -44,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 @ContextConfiguration(classes = {PedidoController.class, PedidoService.class
         ,PasswordEncoder.class, JwtService.class, PedidoDTO.class,ClienteDTO.class, ProdutoDTO.class
         })
@@ -64,6 +65,8 @@ public class PedidoControllerTests {
     private ModelMapper modelMapper;
 
 
+    /*
+    @Test
     @DisplayName("Deve cadastrar pedido.")
     @WithMockUser
     public void cadastrarPedidoTest() throws Exception{
@@ -74,7 +77,7 @@ public class PedidoControllerTests {
 
         PedidoDTO dto = PedidoDTO.builder()
                 .cliente(infoDTO.getCodigo())
-                .items(infoDTO.getItems())
+                //.items(infoDTO.getItems())
                 .total(infoDTO.getTotal())
                 .build();
 
@@ -102,6 +105,8 @@ public class PedidoControllerTests {
                 .andExpect(jsonPath("total").value(pedidoFake.getTotal()))
         ;
     }
+
+
 
     @DisplayName("Deve cadastrar pedido.")
     @WithMockUser
@@ -157,22 +162,6 @@ public class PedidoControllerTests {
 
     }
 
-    /*
-    private List<ItemPedidoDTO> converterDTO(List<InformacaoItemPedidoDTO> itens){
-        if(CollectionUtils.isEmpty(itens)){
-            return Collections.emptyList();
-        }
-        return itens.stream().map(
-                item -> ItemPedidoDTO
-                        .builder()
-                        .produto(item.getDescricaoProduto().getId())
-                        .quantidade(item.getQuantidade())
-                        .build()
-
-        ).collect(Collectors.toList());
-    }
-    */
-
 
     private List<InformacaoItemPedidoDTO> converter(List<ItemPedido> itens){
         if(CollectionUtils.isEmpty(itens)){
@@ -201,4 +190,7 @@ public class PedidoControllerTests {
                 .items(converter(pedido.getItens()))
                 .build();
     }
+
+
+      */
 }
