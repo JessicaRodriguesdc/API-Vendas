@@ -86,6 +86,36 @@ public class ProdutoControllerTests {
 
     }
 
+    @Test
+    @DisplayName("Deve dar erro ao cadastrar Produto.")
+    @WithMockUser
+    public void erroCadastrarProdutoTest()throws Exception{
+        //cenario
+        Integer id = 1;
+        ProdutoDTO dto = prepararProdutoDTO();
+        Produto produtoFake = Produto.builder()
+                .id(id)
+                .descricao(dto.getDescricao())
+                .build();
+
+        BDDMockito.given(service.salvar(Mockito.any(Produto.class)))
+                .willReturn(produtoFake);
+
+        String json = new ObjectMapper().writeValueAsString(dto);
+
+        //execulcao
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(api_produto)
+                .with(csrf())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        //verificacao
+        mvc.perform(request)
+                .andExpect(status().isBadRequest());
+    }
+
 
     @Test
     @DisplayName("Deve buscar o produto pelo id.")
