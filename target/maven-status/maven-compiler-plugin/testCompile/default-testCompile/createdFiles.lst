@@ -1,4 +1,5 @@
 br\com\sistemavendas\produto\repository\ProdutoRepositoryTests.class
+br\com\sistemavendas\pedido\controller\PedidoControllerTests.class
 br\com\sistemavendas\cliente\repository\ClienteRepositoryTests.class
 br\com\sistemavendas\produto\controller\ProdutoControllerTests.class
 br\com\sistemavendas\usuario\controller\UsuarioControllerTests.class

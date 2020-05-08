@@ -101,7 +101,7 @@ public class ProdutoControllerTests {
         BDDMockito.given(service.salvar(Mockito.any(Produto.class)))
                 .willReturn(produtoFake);
 
-        String json = new ObjectMapper().writeValueAsString(dto);
+        String json = new ObjectMapper().writeValueAsString(produtoFake);
 
         //execulcao
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
