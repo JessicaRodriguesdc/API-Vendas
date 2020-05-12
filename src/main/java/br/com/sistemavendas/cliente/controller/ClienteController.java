@@ -93,7 +93,7 @@ public class ClienteController {
                         return  clienteExistente;
                     } ).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
                      "Cliente nao encontrado"));
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(clienteAtualizado);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(clienteAtualizado);
     }
 
     @GetMapping

@@ -145,7 +145,7 @@ public class ClienteControllerTests {
 
         //verificacao
         mvc.perform(request)
-                .andExpect(status().isNotFound())
+                .andExpect(status().isNoContent())
                 .andExpect(jsonPath("id").isNotEmpty())
                 .andExpect(jsonPath("id").value(clienteFake.getId()))
                 .andExpect(jsonPath("nome").value(clienteFake.getNome()))

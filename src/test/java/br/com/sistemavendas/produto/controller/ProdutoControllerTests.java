@@ -179,7 +179,7 @@ public class ProdutoControllerTests {
 
         //verificacao
         mvc.perform(request)
-                .andExpect(status().isNotFound())
+                .andExpect(status().isNoContent())
                 .andExpect(jsonPath("id").isNotEmpty())
                 .andExpect(jsonPath("id").value(produtoFake.getId()))
                 .andExpect(jsonPath("descricao").value(produtoFake.getDescricao()))

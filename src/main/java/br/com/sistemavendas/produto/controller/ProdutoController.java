@@ -64,7 +64,7 @@ public class ProdutoController {
                     return  produtoExiste;
                 } ).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Produto nao encontrado"));
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(produtoAtualizado);
+        return ResponseEntity.status(NO_CONTENT).body(produtoAtualizado);
     }
 
 
